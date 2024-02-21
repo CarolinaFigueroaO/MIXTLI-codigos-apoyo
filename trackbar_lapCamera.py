@@ -1,7 +1,7 @@
 ''' 
 ----------------------------
 Codigo para probar la camara de la laptop con deteccion de bordes
-con ayuda de trackbars para ajustar los parametros de la deteccion
+con ayuda de trackbars para ajustar los parametros de la deteccion 
 ----------------------------
 '''
 

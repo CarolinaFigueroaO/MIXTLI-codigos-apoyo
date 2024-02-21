@@ -1,6 +1,6 @@
 ''' 
 ----------------------------
-Codigo base para probar la camara del drone DJI Tello
+Codigo base para probar la camara del drone DJI Tello 
 ----------------------------
 '''
 
