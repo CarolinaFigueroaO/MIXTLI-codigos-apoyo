@@ -1,6 +1,6 @@
 ''' 
 ----------------------------
-Codigo base para probar la camara de la laptop 
+Codigo base para filtrar colores de video 
 ----------------------------
 '''
 
