@@ -136,6 +136,8 @@ lineas = cv2.HoughLinesP(region, 2, np.pi/180, 100, np.array([]), minLineLength=
 dibujarLineas(region, lineas)
 
 # Mostramos la imagen
-cv2.imshow('Original', region)
+listaImagenes = cv2.hconcat([gaussian, region])
+
+cv2.imshow('Original', listaImagenes)
 
 cv2.waitKey(0)
