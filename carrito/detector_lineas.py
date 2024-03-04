@@ -17,20 +17,20 @@ def gaussianBlur(imagen, kernel):
 
 def regionObjetivo(img, vertices):
 
-    mascara = np.zeros_like(img) # Creamos una mas
+    mascara = np.zeros_like(img) # Creamos una matriz de ceros con las mismas dimensiones que la imagen original
     
     #definir un color de 3 canales o 1 canal para rellenar la máscara dependiendo de la imagen de entrada
     if len(img.shape) > 2:
         canal_contador = img.shape[2]  # i.e. 3 or 4 depending on your image
-        ignorar_mascara = (255,) * canal_contador
+        ignorar_mascara = (255,) * canal_contador # en este caso, es 3 canales
     else:
-        ignorar_mascara = 255
+        ignorar_mascara = 255 # en este caso, es 1 canal
         
     #Rellena el área de interés con el color  
-    cv2.fillPoly(mascara, vertices, ignorar_mascara)
+    cv2.fillPoly(mascara, vertices, ignorar_mascara) 
     
     #Regresa la imagen solo donde la máscara es 1, o sea el área de interés
-    imagen_mascara = cv2.bitwise_and(img, mascara)
+    imagen_mascara = cv2.bitwise_and(img, mascara) # Solo se muestra la parte de la imagen que está dentro del área de interés
     return imagen_mascara
 
 def dibujarLineas(img, lineas, color=[255, 0, 0], thickness=14):
