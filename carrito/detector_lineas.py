@@ -4,7 +4,11 @@ import numpy as np
 import cv2
 
 # Leemos la imagen
-image = mpimg.imread('carrito/imagen_prueba2.jpg')
+image = cv2.imread('carrito/imagen_prueba2.jpg')
+centro_absoluto_x = image.shape[1] / 2
+centro_absoluto_y = image.shape[0] / 2
+print("Centro absoluto x: ", centro_absoluto_x)
+print("Centro absoluto y: ", centro_absoluto_y)
 
 def escalaGrises(imagen):
     return cv2.cvtColor(imagen, cv2.COLOR_RGB2GRAY)
@@ -84,6 +88,9 @@ def dibujarLineas(img, lineas, color=[255, 0, 0], thickness=14):
         grad = y_elm / x_elm
         x_diff = abs((izq_y2_avg - top_position_of_region) / grad)
         cv2.line(img, (int(extrapolated_x1), int(extrapolated_y1)), (int(izq_x2_avg + x_diff), int(top_position_of_region)), color, thickness) 
+        cv2.circle(img, (int(extrapolated_x1), int(extrapolated_y1)), 5, color, thickness)
+        promedio1_x = (int(extrapolated_x1) + int(izq_x2_avg + x_diff)) / 2
+        promedio1_y = (int(extrapolated_y1) + int(top_position_of_region)) / 2
 
     # average and extrapolate for right lane
     if len(der) != 0:
@@ -106,6 +113,20 @@ def dibujarLineas(img, lineas, color=[255, 0, 0], thickness=14):
         grad = y_elm / x_elm
         x_diff = abs((der_y1_avg - top_position_of_region) / grad)
         cv2.line(img, (int(der_x1_avg - x_diff), int(top_position_of_region)), (int(extrapolated_x2), int(extrapolated_y2)), color, thickness) 
+        promedio2_x = (int(der_x1_avg - x_diff) + int(extrapolated_x2)) / 2
+        promedio2_y = (int(top_position_of_region) + int(extrapolated_y2)) / 2
+
+        promediof_x = (promedio1_x + promedio2_x) / 2
+        promediof_y = (promedio1_y + promedio2_y) / 2
+
+        print(img.shape[0], img.shape[1])
+
+        print("Promedio x: ", promediof_x)
+        print("Promedio y: ", promediof_y)
+        print("centro absoluto y: ", centro_absoluto_y)
+    cv2.circle(img, (int(promediof_x), int(centro_absoluto_y)), 5, color, -1)
+        
+
 
 
         
@@ -113,6 +134,10 @@ def dibujarLineas(img, lineas, color=[255, 0, 0], thickness=14):
 
 bajo = 50
 alto = 150
+
+
+
+cv2.circle(image,( int(centro_absoluto_x), int(centro_absoluto_y + 100)), 5, [0, 0, 255], -1)
 
 # Convertimos la imagen a escala de grises
 grises = escalaGrises(image)
@@ -135,9 +160,10 @@ lineas = cv2.HoughLinesP(region, 2, np.pi/180, 100, np.array([]), minLineLength=
 # Dibujamos las lineas
 dibujarLineas(region, lineas)
 
-# Mostramos la imagen
-listaImagenes = cv2.hconcat([gaussian, region])
-
-cv2.imshow('Original', listaImagenes)
-
+gaussian = cv2.cvtColor(gaussian, cv2.COLOR_GRAY2BGR)
+cv2.circle(gaussian,( 100, 100), 5, [100,100, 200], -1)
+cv2.imshow('Imagen', image)
+cv2.imshow('Gaussian', gaussian)
+cv2.imshow('Region', region)
 cv2.waitKey(0)
+

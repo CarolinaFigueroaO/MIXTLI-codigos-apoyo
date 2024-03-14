@@ -1,1 +1,1 @@
-280
+int(centro_absoluto_x)
